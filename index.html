@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WAVEX GLOBAL — Live Logistics Tracking</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="live-banner">
+    <strong>WAVEX GLOBAL</strong> — Professional Live Tracking
+  </div>
+
+  <header class="navbar">
+    <div class="brand" id="brandLogo">
+      <div class="brand-mark">W</div>
+      <div>
+        <div class="brand-name">WAVEX GLOBAL</div>
+        <div class="brand-tag">MOVE BEYOND BORDERS</div>
+      </div>
+    </div>
+
+    <nav>
+      <button onclick="showView('homeView')">Home</button>
+      <button onclick="showView('trackView')">Track</button>
+      <button onclick="showView('authView')">Client Login</button>
+    </nav>
+
+    <div class="nav-actions" id="navActions">
+      <button class="btn btn-outline" onclick="showView('authView')">Client Login</button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HOME -->
+    <section id="homeView" class="view active">
+      <section class="hero">
+        <div class="hero-content">
+          <span class="eyebrow">GLOBAL LOGISTICS TRACKING</span>
+          <h1>Track every shipment<br><span>with confidence.</span></h1>
+          <p>Professional real-time tracking for international shipments. Enter your tracking number to view live status, progress and delivery updates.</p>
+          <div class="hero-buttons">
+            <button class="btn btn-primary btn-large" onclick="showView('trackView')">Track a Package</button>
+            <button class="btn btn-light btn-large" onclick="showView('authView')">Client Login</button>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="card-top">
+            <span>LIVE TRACKING</span>
+            <span class="status-dot"></span>
+          </div>
+          <div class="tracking-code">WXG-2048-7719</div>
+          <div class="route">
+            <div><small>FROM</small><strong>Pensacola, USA</strong></div>
+            <div class="route-line">✈</div>
+            <div><small>TO</small><strong>London, UK</strong></div>
+          </div>
+          <div class="progress"><div class="progress-bar" style="width:58%"></div></div>
+          <div class="hero-status">
+            <strong>In International Transit</strong>
+            <span>Estimated delivery: Sep 10, 2026</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div><strong>190+</strong><span>Countries</span></div>
+        <div><strong>24/7</strong><span>Visibility</span></div>
+        <div><strong>99.2%</strong><span>Tracking Accuracy</span></div>
+        <div><strong>1M+</strong><span>Shipments</span></div>
+      </section>
+    </section>
+
+    <!-- TRACK -->
+    <section id="trackView" class="view">
+      <div class="page-header">
+        <span class="eyebrow">SHIPMENT TRACKING</span>
+        <h1>Track your package</h1>
+        <p>Enter your WAVEX GLOBAL tracking number</p>
+      </div>
+
+      <div class="tracker-box">
+        <input id="trackingInput" type="text" placeholder="Example: WXG-2048-7719" autocomplete="off" />
+        <button class="btn btn-primary" onclick="trackShipment()">Track Shipment</button>
+      </div>
+
+      <div id="trackingResult"></div>
+    </section>
+
+    <!-- CLIENT LOGIN -->
+    <section id="authView" class="view">
+      <div class="auth-wrapper">
+        <div class="auth-card">
+          <div class="auth-header">
+            <span class="eyebrow">CLIENT PORTAL</span>
+            <h2>Client Login</h2>
+            <p>Access your shipment history</p>
+          </div>
+
+          <form onsubmit="login(event)">
+            <label>Email</label>
+            <input id="loginEmail" type="email" placeholder="you@example.com" required>
+            <label>Password</label>
+            <input id="loginPassword" type="password" placeholder="Your password" required>
+            <button class="btn btn-primary full" type="submit">Sign In</button>
+          </form>
+
+          <div class="demo-note">
+            <strong>Demo Client</strong><br>
+            Email: real@wavex.live<br>
+            Password: Real1234
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT DASHBOARD -->
+    <section id="dashboardView" class="view">
+      <div id="loggedOutDashboard" class="login-required">
+        <div class="empty-icon">🔐</div>
+        <h2>Client login required</h2>
+        <p>Please sign in to view your shipments.</p>
+        <button class="btn btn-primary" onclick="showView('authView')">Client Login</button>
+      </div>
+
+      <div id="dashboardContent" class="hidden">
+        <div class="dashboard-header">
+          <div>
+            <span class="eyebrow">CLIENT DASHBOARD</span>
+            <h1>Welcome, <span id="clientName"></span></h1>
+          </div>
+          <button class="btn btn-outline" onclick="logout()">Sign Out</button>
+        </div>
+
+        <div class="dashboard-stats">
+          <div class="dash-stat"><span>Total</span><strong id="totalShipments">0</strong></div>
+          <div class="dash-stat"><span>In Transit</span><strong id="transitShipments">0</strong></div>
+          <div class="dash-stat"><span>Delivered</span><strong id="deliveredShipments">0</strong></div>
+        </div>
+
+        <div class="dashboard-card">
+          <h2 style="margin-bottom:16px;">Your Shipments</h2>
+          <div id="shipmentList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN PANEL -->
+    <section id="adminView" class="view">
+      <div class="page-header">
+        <span class="eyebrow">ADMIN CONTROL CENTER</span>
+        <h1>Shipment Command Center</h1>
+        <p>Create • Start • Pause • AI Commands</p>
+      </div>
+
+      <div class="admin-container">
+
+        <div class="dashboard-card ai-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <h2>Admin AI Assistant</h2>
+            <span class="ai-badge">Only Admin</span>
+          </div>
+          <p class="ai-desc">Give clear instructions. The AI will obey you.</p>
+          <div class="ai-input-row">
+            <input id="aiCommand" type="text" placeholder='create package client email@example.com from "Lagos, Nigeria" to "London, UK" sender "John" receiver "Mary" desc "Documents" weight 2.5' />
+            <button class="btn btn-primary" onclick="runAICommand()">Execute</button>
+          </div>
+          <div id="aiResponse" class="ai-response"></div>
+        </div>
+
+        <div class="dashboard-card">
+          <h2 style="margin-bottom:16px;">Create Shipment (Manual)</h2>
+          <form onsubmit="adminCreateShipment(event)">
+            <div class="form-grid">
+              <div>
+                <label>Client Email</label>
+                <input id="adminClientEmail" required placeholder="client@email.com">
+              </div>
+              <div>
+                <label>Tracking (leave empty to auto)</label>
+                <input id="adminTracking" placeholder="Auto generate">
+              </div>
+              <div>
+                <label>Sender Name</label>
+                <input id="adminSenderName" required>
+              </div>
+              <div>
+                <label>Sender Location</label>
+                <input id="adminSenderLocation" required placeholder="City, Country">
+              </div>
+              <div>
+                <label>Receiver Name</label>
+                <input id="adminReceiverName" required>
+              </div>
+              <div>
+                <label>Receiver Location</label>
+                <input id="adminReceiverLocation" required placeholder="City, Country">
+              </div>
+              <div class="full-field">
+                <label>Package Description</label>
+                <input id="adminDescription" required>
+              </div>
+              <div>
+                <label>Weight (kg)</label>
+                <input id="adminWeight" type="number" step="0.1" required>
+              </div>
+              <div>
+                <label>Estimated Delivery</label>
+                <input id="adminDelivery" type="date" required>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-large" style="margin-top:18px;" type="submit">Create Shipment</button>
+          </form>
+        </div>
+
+        <div class="dashboard-card">
+          <h2 style="margin-bottom:16px;">All Shipments Control</h2>
+          <div id="adminShipmentList"></div>
+        </div>
+
+        <button class="btn btn-outline" onclick="showView('homeView')">← Back to Public Site</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-brand">
+      <div class="brand-mark">W</div>
+      <strong>WAVEX GLOBAL</strong>
+    </div>
+    <p>MOVE BEYOND BORDERS</p>
+    <span>© 2026 WAVEX GLOBAL</span>
+  </footer>
+
+  <div id="shipmentModal" class="modal hidden">
+    <div class="modal-overlay" onclick="closeModal()"></div>
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+  </html>
